@@ -27,8 +27,7 @@ def receive_data(request):
     idData.objects.create(
         yearbookId=received_data.get('yearbookId'),
         otherSelectedPeople=received_data.get('otherSelectedPeople')
-    )
-    
+    )    
     # Process the received data
     print("Received data:", received_data)
     
@@ -89,7 +88,8 @@ def process_post(post):
         image = resize_image(future_image.result())
 
         if compare_images(comparisonImage, image):
-            post['written_by_profile']['profile_image'] = "https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg="
+            # post['written_by_profile']['profile_image'] = "https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg="
+            post['written_by_profile']['profile_image'] = "https://i.pinimg.com/736x/c0/74/9b/c0749b7cc401421662ae901ec8f9f660.jpg"
         else:
             post['written_by_profile']['profile_image'] = f'https://yearbook.sarc-iitb.org{post["written_by_profile"]["profile_image"]}'
 
@@ -153,7 +153,6 @@ def process_profiles(profile):
         profile['profile_image'] = f'https://yearbook.sarc-iitb.org{profile["profile_image"]}'
 
     return profile
-
 
 @csrf_exempt
 def feed(request):
