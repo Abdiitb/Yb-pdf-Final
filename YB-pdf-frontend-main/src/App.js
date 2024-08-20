@@ -9,33 +9,34 @@ import PDFGenerator from "./Pages/PDFGenerator";
 import axios from "axios";
 
 const App = () => {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/id_data')
-      .then(response => {
-        setData(response.data);
-        console.log(data);
-      })
-      .catch(error => {
-        console.log('error')
+  // useEffect(() => {
+  //   axios.get('http://127.0.0.1:8000/api/id_data')
+  //     .then(response => {
+  //       setData(response.data);
+  //       console.log(data);
+  //     })
+  //     .catch(error => {
+  //       console.log('error')
         
-        console.error('There was an error fetching the data!', error);
-      });
+  //       console.error('There was an error fetching the data!', error);
+  //     });
       
-  }, []);
+  // }, []);
 
-  const idList = (data.length !== 0) ? [data[data.length - 1].yearbookId] : []; // Replace this with your actual list of ids
-  // console.log("idList = ",idList);
-  console.log(data)
+  // const idList = (data.length !== 0) ? [data[data.length - 1].yearbookId] : []; // Replace this with your actual list of ids
+  // // console.log("idList = ",idList);
+  // console.log(data)
+  const idList = [56]
 
-  let ids = [];
-  if(data.length !== 0 && data[data.length - 1].otherSelectedPeople === ""){
-    ids = [];
-  }
-  else{
-    ids = (data.length !== 0) ? [JSON.parse(data[data.length - 1].otherSelectedPeople)] : [];
-  }
+  let ids = [[106]];
+  // if(data.length !== 0 && data[data.length - 1].otherSelectedPeople === ""){
+  //   ids = [];
+  // }
+  // else{
+  //   ids = (data.length !== 0) ? [JSON.parse(data[data.length - 1].otherSelectedPeople)] : [];
+  // }
   const downloadAnchorRef = useRef(null);
   const [readyToDownload, setReadyToDownload] = useState(false);
   // useEffect(() => {

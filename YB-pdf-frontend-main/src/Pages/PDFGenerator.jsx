@@ -19,8 +19,9 @@ import back2 from "./assets/back/2.png";
 import back3 from "./assets/back/3.png";
 import back4 from "./assets/back/4.png";
 import back5 from "./assets/back/5.png";
+import back6 from "./assets/back/6.jpg";
 import front1 from "./assets/front/1.png";
-import front2 from "./assets/front/2.png";
+import front5 from "./assets/front/5.jpg";
 import front3 from "./assets/front/3.png";
 import front4 from "./assets/front/4.png";
 import pic from "./assets/background.jpg";
@@ -399,231 +400,368 @@ const PDFGenerator = ({ id, idList }) => {
           // const postData = { "posts": responseData };
           // const newResponse = await axios.post("http://localhost:8000/api/feed", postData)
           // const newResponseData = newResponse.data;
+          let minusoneSet = [];
+          let zerothSet = [];
+          let firstSet = [];
+          let firstPointOneSet = [];
+          let firstPointTwoSet = [];
+          let secondSet = [];
+          let secondPointOneSet = [];
+          let thirdSet = [];
+          let fourthSet = [];
+          let fifthSet = [];
 
-          let zerothSet = []
-        let firstSet = []
-        let secondSet = []
-        let thirdSet = []
-        let fourthSet = []
-        let fifthSet = []
+          const minusoneSetFinal = [];
+          const zerothSetFinal = [];
+          const firstSetFinal = [];
+          const firstPointOneSetFinal = [];
+          const firstPointTwoSetFinal = [];
+          const secondSetFinal = [];
+          const secondPointOneSetFinal = [];
+          const thirdSetFinal = [];
+          const fourthSetFinal = [];
+          const fifthSetFinal = [];
 
+          responseData.forEach((post) => {
+            post.content = removeLineBreaks(post.content);
 
+            if (post.content.length >= 4000) {
+              minusoneSet.push(post);
+            } else if (
+              post.content.length >= 2000 &&
+              post.content.length < 4000
+            ) {
+              zerothSet.push(post);
+            } else if (
+              post.content.length >= 1800 &&
+              post.content.length < 2000
+            ) {
+              firstPointOneSet.push(post);
+            } else if (
+              post.content.length < 1800 &&
+              post.content.length >= 1200
+            ) {
+              firstPointTwoSet.push(post);
+            } else if (
+              post.content.length < 1200 &&
+              post.content.length >= 1000
+            ) {
+              firstSet.push(post);
+            }
+            else if (
+              post.content.length < 1000 &&
+              post.content.length >= 800
+            ) {
+              secondPointOneSet.push(post);
+            }
+            else if (
+              post.content.length < 800 &&
+              post.content.length >= 600
+            ) {
+              secondSet.push(post);
+            }
+            else if (
+              post.content.length < 600 &&
+              post.content.length >= 250
+            ) {
+              thirdSet.push(post);
+            }
+            else if (
+              post.content.length < 600 &&
+              post.content.length >= 0
+            ) {
+              fourthSet.push(post);
+            }
+            else {
+              fourthSet.push(post);
+            }
 
-        const zerothSetFinal = []
-        const firstSetFinal = []
-        const secondSetFinal = []
-        const thirdSetFinal = []
-        const fourthSetFinal = []
-        const fifthSetFinal = []
+            // else {
+            //   fifthSet.push(post)
+            // }
+          });
 
-
-        responseData.forEach((post) => {
-
-          post.content = removeLineBreaks(post.content);
-
-          if (post.content.length >= 1700) {
-            zerothSet.push(post);
-          }
-
-          else if ((post.content.length >= 1400) && (post.content.length < 1700)) {
-            firstSet.push(post)
-          }
-
-          else if ((post.content.length >= 800) && (post.content.length < 1400)) {
-            secondSet.push(post)
-          }
-
-          else if ((post.content.length < 800) && (post.content.length >= 300)) {
-            thirdSet.push(post)
-          }
-
-          else {
-            fourthSet.push(post)
-          }
-
-          // else {
-          //   fifthSet.push(post)
-          // }
-
-        })
-
-
-        function shuffleArray(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-          }
-        }
-
-
-        function sortWithPattern(arr, length) {
-          // Separate big and small numbers
-          const bigPosts = arr.filter((post) => post.content.length > length / 2);
-          const smallPosts = arr.filter((post) => post.content.length <= length / 2);
-
-          // Shuffle big and small number arrays
-          shuffleArray(bigPosts);
-          shuffleArray(smallPosts);
-
-          const result = [];
-
-          // Interleave the elements from both arrays
-          for (let i = 0; i < Math.max(bigPosts.length, smallPosts.length); i++) {
-            if (bigPosts[i]) result.push(bigPosts[i]);
-            if (smallPosts[i]) result.push(smallPosts[i]);
-          }
-
-          return result;
-        }
-
-
-
-        if (fifthSet.length > 0) {
-
-          fifthSet.sort((a, b) => a.content.length - b.content.length);
-
-
-          let leftPosts = fifthSet.length % 12
-
-          if (leftPosts !== 0 && (fourthSet.length !== 0 || thirdSet.length !== 0 || secondSet.length !== 0 || firstSet.length !== 0 || zerothSet.length !== 0)) {
-            for (let i = 0; i < leftPosts; i += 1) {
-              fourthSet.push(fifthSet.pop(fifthSet[i]))
+          function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
             }
           }
 
+          function sortWithPattern(arr, length) {
+            // Separate big and small numbers
+            const bigPosts = arr.filter(
+              (post) => post.content.length > length / 2
+            );
+            const smallPosts = arr.filter(
+              (post) => post.content.length <= length / 2
+            );
 
-          shuffleArray(fifthSet);
+            // Shuffle big and small number arrays
+            shuffleArray(bigPosts);
+            shuffleArray(smallPosts);
+            const result = [];
 
-          fifthSet = sortWithPattern(fifthSet, 300);
+            // Interleave the elements from both arrays
+            for (
+              let i = 0;
+              i < Math.max(bigPosts.length, smallPosts.length);
+              i++
+            ) {
+              if (bigPosts[i]) result.push(bigPosts[i]);
+              if (smallPosts[i]) result.push(smallPosts[i]);
+            }
+            return result;
+          }
 
+          if (fifthSet.length > 0) {
+            fifthSet.sort((a, b) => a.content.length - b.content.length);
 
+            let leftPosts = fifthSet.length % 12;
 
-
-          for (let i = 0; i < fifthSet.length; i += 12) {
-            let chunk = fifthSet.slice(i, i + 12);
-            let temp = []
-
-            for (let j = 0; j < chunk.length; j += 2) {
-              let chunk2 = chunk.slice(j, j + 2)
-              temp.push(chunk2)
+            if (
+              leftPosts !== 0 &&
+              (fourthSet.length !== 0 ||
+                thirdSet.length !== 0 ||
+                secondSet.length !== 0 ||
+                firstSet.length !== 0 ||
+                zerothSet.length !== 0)
+            ) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                fourthSet.push(fifthSet.pop(fifthSet[i]));
+              }
             }
 
-            fifthSetFinal.push(temp);
-          }
+            shuffleArray(fifthSet);
 
-        }
+            fifthSet = sortWithPattern(fifthSet, 300);
 
+            for (let i = 0; i < fifthSet.length; i += 12) {
+              let chunk = fifthSet.slice(i, i + 12);
+              let temp = [];
 
+              for (let j = 0; j < chunk.length; j += 2) {
+                let chunk2 = chunk.slice(j, j + 2);
+                temp.push(chunk2);
+              }
 
-
-        if (fourthSet.length > 0) {
-
-          fourthSet.sort((a, b) => a.content.length - b.content.length);
-
-          let leftPosts = fourthSet.length % 11
-
-          if (leftPosts !== 0 && (thirdSet.length !== 0 || secondSet.length !== 0 || firstSet.length !== 0 || zerothSet.length !== 0)) {
-            for (let i = 0; i < leftPosts; i += 1) {
-              thirdSet.push(fourthSet.pop(fourthSet[i]))
-            }
-          }
-
-          shuffleArray(fourthSet);
-
-          fourthSet = sortWithPattern(fourthSet, 300);
-
-
-          for (let i = 0; i < fourthSet.length; i += 11) {
-            let chunk = fourthSet.slice(i, i + 11);
-            fourthSetFinal.push(chunk);
-          }
-
-        }
-
-
-
-
-        if (thirdSet.length > 0) {
-
-          thirdSet.sort((a, b) => a.content.length - b.content.length);
-
-          let leftPosts = thirdSet.length % 9
-
-          if (leftPosts !== 0 && (secondSet.length !== 0 || firstSet.length !== 0 || zerothSet.length !== 0)) {
-            for (let i = 0; i < leftPosts; i += 1) {
-              secondSet.push(thirdSet.pop(thirdSet[i]))
+              fifthSetFinal.push(temp);
             }
           }
 
-          shuffleArray(thirdSet);
+          if (fourthSet.length > 0) {
+            fourthSet.sort((a, b) => a.content.length - b.content.length);
 
-          thirdSet = sortWithPattern(thirdSet, 1000);
+            let leftPosts = fourthSet.length % 11;
 
-          for (let i = 0; i < thirdSet.length; i += 9) {
-            let chunk = thirdSet.slice(i, i + 9);
-            thirdSetFinal.push(chunk);
-          }
+            if (
+              leftPosts !== 0 &&
+              (thirdSet.length !== 0 ||
+                secondPointOneSet.length !== 0 ||
+                secondSet.length !== 0 ||
+                firstSet.length !== 0 ||
+                firstPointOneSet.length !== 0 ||
+                firstPointTwoSet.length !== 0 ||
+                zerothSet.length !== 0 ||
+                minusoneSet.length !== 0)
+                
+            ) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                thirdSet.push(fourthSet.pop(fourthSet[i]));
+              }
+            }
 
-        }
+            shuffleArray(fourthSet);
 
+            fourthSet = sortWithPattern(fourthSet, 300);
 
-        if (secondSet.length > 0) {
-
-          secondSet.sort((a, b) => a.content.length - b.content.length);
-
-          let leftPosts = secondSet.length % 7
-
-          if (leftPosts !== 0 && (firstSet.length !== 0 || zerothSet.length !== 0)) {
-            for (let i = 0; i < leftPosts; i += 1) {
-              firstSet.push(secondSet.pop(secondSet[i]))
+            for (let i = 0; i < fourthSet.length; i += 11) {
+              let chunk = fourthSet.slice(i, i + 11);
+              fourthSetFinal.push(chunk);
             }
           }
 
-          shuffleArray(secondSet)
-          secondSet = sortWithPattern(secondSet, 2200);
+          if (thirdSet.length > 0) {
+            thirdSet.sort((a, b) => a.content.length - b.content.length);
 
+            let leftPosts = thirdSet.length % 9;
 
-          for (let i = 0; i < secondSet.length; i += 7) {
-            let chunk = secondSet.slice(i, i + 7);
-            secondSetFinal.push(chunk);
-          }
+            if (
+              leftPosts !== 0 &&
+              (secondPointOneSet.length !== 0 ||
+                secondSet.length !== 0 ||
+                firstSet.length !== 0 ||
+                firstPointOneSet.length !== 0 ||
+                firstPointTwoSet.length !== 0 ||
+                zerothSet.length !== 0 ||
+                minusoneSet.length !== 0  )
+            ) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                secondPointOneSet.push(thirdSet.pop(thirdSet[i]));
+              }
+            }
 
-        }
+            shuffleArray(thirdSet);
 
+            thirdSet = sortWithPattern(thirdSet, 1000);
 
-
-        if (firstSet.length > 0) {
-
-          firstSet.sort((a, b) => a.content.length - b.content.length);
-
-          let leftPosts = firstSet.length % 5;
-
-          if (leftPosts !== 0 && zerothSet.length !== 0) {
-            for (let i = 0; i < leftPosts; i += 1) {
-              zerothSet.push(firstSet.pop(firstSet[i]))
+            for (let i = 0; i < thirdSet.length; i += 9) {
+              let chunk = thirdSet.slice(i, i + 9);
+              thirdSetFinal.push(chunk);
             }
           }
+          if (secondPointOneSet.length > 0) {
 
-
-          shuffleArray(firstSet)
-          firstSet = sortWithPattern(firstSet, 3000);
-
-          for (let i = 0; i < firstSet.length; i += 5) {
-            let chunk = firstSet.slice(i, i + 5);
-            firstSetFinal.push(chunk);
+            secondPointOneSet.sort((a, b) => a.content.length - b.content.length);
+  
+            let leftPosts = secondPointOneSet.length % 6
+  
+            if (leftPosts !== 0 && (secondSet.length !== 0 ||
+              firstSet.length !== 0 ||
+              firstPointOneSet.length !== 0 ||
+              firstPointTwoSet.length !== 0 ||
+              zerothSet.length !== 0 ||
+              minusoneSet.length !== 0)) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                secondSet.push(secondPointOneSet.pop(secondPointOneSet[i]))
+              }
+            }
+  
+            shuffleArray(secondPointOneSet)
+            secondPointOneSet = sortWithPattern(secondPointOneSet, 2200);
+  
+  
+            for (let i = 0; i < secondPointOneSet.length; i += 6) {
+              let chunk = secondPointOneSet.slice(i, i + 6);
+              secondPointOneSetFinal.push(chunk);
+            }
+  
           }
+          if (secondSet.length > 0) {
+            secondSet.sort((a, b) => a.content.length - b.content.length);
 
+            let leftPosts = secondSet.length % 7;
 
-        }
+            if (
+              leftPosts !== 0 &&
+              (firstSet.length !== 0 ||
+                firstPointOneSet.length !== 0 ||
+                firstPointTwoSet.length !== 0 ||
+                zerothSet.length !== 0 ||
+                minusoneSet.length !== 0)
+            ) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                firstSet.push(secondSet.pop(secondSet[i]));
+              }
+            }
 
+            shuffleArray(secondSet);
+            secondSet = sortWithPattern(secondSet, 2200);
 
-        if (zerothSet.length > 0) {
-          for (let i = 0; i < zerothSet.length; i += 2) {
-            let chunk = zerothSet.slice(i, i + 2)
-            zerothSetFinal.push(chunk);
+            for (let i = 0; i < secondSet.length; i += 7) {
+              let chunk = secondSet.slice(i, i + 7);
+              secondSetFinal.push(chunk);
+            }
           }
-        }
+          if (firstSet.length > 0) {
 
+            firstSet.sort((a, b) => a.content.length - b.content.length);
+  
+            let leftPosts = firstSet.length % 5;
+  
+            if (leftPosts !== 0 && (firstPointOneSet.length !== 0 ||
+              firstPointTwoSet.length !== 0 ||
+              zerothSet.length !== 0 ||
+              minusoneSet.length !== 0)) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                firstPointOneSet.push(firstSet.pop(firstSet[i]))
+              }
+            }
+  
+  
+            shuffleArray(firstSet)
+            firstSet = sortWithPattern(firstSet, 3000);
+  
+            for (let i = 0; i < firstSet.length; i += 5) {
+              let chunk = firstSet.slice(i, i + 5);
+              firstSetFinal.push(chunk);
+            }
+  
+  
+          }
+          if (firstPointOneSet.length > 0) {
+
+            firstPointOneSet.sort((a, b) => a.content.length - b.content.length);
+  
+            let leftPosts = firstPointOneSet.length % 3
+  
+            if (leftPosts !== 0 && ( firstPointTwoSet.length!==0 || zerothSet.length !== 0 || minusoneSet.length !==0)) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                firstPointTwoSet.push(firstPointTwoSet.pop(firstPointOneSet[i]))
+              }
+            }
+  
+            shuffleArray(firstPointOneSet)
+            firstPointOneSet = sortWithPattern(firstPointOneSet, 2200);
+  
+  
+            for (let i = 0; i < firstPointOneSet.length; i += 3) {
+              let chunk =firstPointOneSet.slice(i, i + 3);
+              firstPointOneSetFinal.push(chunk);
+            }
+  
+          }
+          if (firstPointTwoSet.length > 0) {
+
+            firstPointTwoSet.sort((a, b) => a.content.length - b.content.length);
+  
+            let leftPosts = firstPointTwoSet.length % 4
+  
+            if (leftPosts !== 0 && (zerothSet.length !== 0 || minusoneSet.length !== 0)) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                zerothSet.push(firstPointTwoSet.pop(firstPointTwoSet[i]))
+              }
+            }
+  
+            shuffleArray(firstPointTwoSet)
+            firstPointTwoSet = sortWithPattern(firstPointTwoSet, 2200);
+  
+  
+            for (let i = 0; i < firstPointTwoSet.length; i += 4) {
+              let chunk = firstPointTwoSet.slice(i, i + 4);
+              firstPointTwoSetFinal.push(chunk);
+            }
+  
+          }
+          if (zerothSet.length > 0) {
+
+            zerothSet.sort((a, b) => a.content.length - b.content.length);
+  
+            let leftPosts = zerothSet.length % 2;
+  
+            if (leftPosts !== 0 && minusoneSet.length !== 0) {
+              for (let i = 0; i < leftPosts; i += 1) {
+                minusoneSet.push(zerothSet.pop(zerothSet[i]))
+              }
+            }
+  
+  
+            shuffleArray(zerothSet)
+            zerothSet = sortWithPattern(zerothSet, 3000);
+  
+            for (let i = 0; i < zerothSet.length; i += 2) {
+              let chunk = zerothSet.slice(i, i + 2);
+              minusoneSetFinal.push(chunk);
+            }
+  
+  
+          }
+          if (minusoneSet.length > 0) {
+            for (let i = 0; i < minusoneSet.length; i += 1) {
+              let chunk = minusoneSet.slice(i, i + 1)
+              minusoneSetFinal.push(chunk);
+            }
+          }
           // setLargerPosts(zerothSetFinal)
           // setLargePosts(firstSetFinal)
           // setMediumPosts(secondSetFinal)
@@ -638,9 +776,13 @@ const PDFGenerator = ({ id, idList }) => {
               smallerPosts: fifthSetFinal,
               smallPosts: fourthSetFinal,
               semiMediumPosts: thirdSetFinal,
+              semiMediummPosts: secondPointOneSetFinal,
               mediumPosts: secondSetFinal,
               largePosts: firstSetFinal,
+              largeePosts: firstPointOneSetFinal,
+              largeeePosts: firstPointTwoSetFinal,
               largerPosts: zerothSetFinal,
+              largerrPosts: minusoneSetFinal, 
             },
           };
         });
@@ -721,8 +863,8 @@ const PDFGenerator = ({ id, idList }) => {
 
   function formatDate(dob) {
     const date = new Date(dob);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   }
@@ -748,28 +890,28 @@ const PDFGenerator = ({ id, idList }) => {
           </View>
         </Page>
         <Page size="A4" style={stylesSigningOff.page}>
-            <View style={stylesSigningOff.section}>
-              <Image src={back1} style={stylesSigningOff.backgroundImg} />
-            </View>
-          </Page>
+          <View style={stylesSigningOff.section}>
+            <Image src={back1} style={stylesSigningOff.backgroundImg} />
+          </View>
+        </Page>
 
-          <Page size="A4" style={stylesSigningOff.page}>
-            <View style={stylesSigningOff.section}>
-              <Image src={back2} style={stylesSigningOff.backgroundImg} />
-            </View>
-          </Page>
+        <Page size="A4" style={stylesSigningOff.page}>
+          <View style={stylesSigningOff.section}>
+            <Image src={back2} style={stylesSigningOff.backgroundImg} />
+          </View>
+        </Page>
 
-          <Page size="A4" style={stylesSigningOff.page}>
-            <View style={stylesSigningOff.section}>
-              <Image src={back3} style={stylesSigningOff.backgroundImg} />
-            </View>
-          </Page>
+        <Page size="A4" style={stylesSigningOff.page}>
+          <View style={stylesSigningOff.section}>
+            <Image src={back3} style={stylesSigningOff.backgroundImg} />
+          </View>
+        </Page>
 
-          <Page size="A4" style={stylesSigningOff.page}>
-            <View style={stylesSigningOff.section}>
-              <Image src={back4} style={stylesSigningOff.backgroundImg} />
-            </View>
-          </Page>
+        <Page size="A4" style={stylesSigningOff.page}>
+          <View style={stylesSigningOff.section}>
+            <Image src={back4} style={stylesSigningOff.backgroundImg} />
+          </View>
+        </Page>
         {profile && (
           <Page size="A4" style={styles.page}>
             <View style={stylesProfile.section}>
@@ -955,6 +1097,12 @@ const PDFGenerator = ({ id, idList }) => {
             </View>
           </Page>
         )}
+
+        <Page size="A4" style={stylesSigningOff.page}>
+          <View style={stylesSigningOff.section}>
+            <Image src={front5} style={stylesSigningOff.backgroundImg} />
+          </View>
+        </Page>
 
         {smallerPosts &&
           smallerPosts.map((posts, index) => {
@@ -2183,7 +2331,9 @@ const PDFGenerator = ({ id, idList }) => {
                           </Text>
                         )}
                         {person.profile.dob && (
-                          <Text style={[stylesProfile.text, stylesProfile.dobText]}>
+                          <Text
+                            style={[stylesProfile.text, stylesProfile.dobText]}
+                          >
                             DoB: {formatDate(person.profile.dob)}
                           </Text>
                         )}
@@ -2392,82 +2542,85 @@ const PDFGenerator = ({ id, idList }) => {
               </Page>
             )}
 
-
-{person.smallerPosts && person.smallerPosts.map((posts, index) => {
-            return (
-              <Page size="A4" style={styles.page}>
-                <View key={index} style={styles.section}>
-                  {/* <Image src={background} style={styles.backgroundImg} /> */}
-                  <View style={styles.containerr}>
-                    {posts.map((postSet) => {
-                      return (
-                        <View style={styles.smallerPostsContaner}>
-                          {postSet.map((post) => {
-                            return (
-                              <View
-                                key={post.id}
-                                style={styles.smallerPostContainer}
-                              >
-                                <View style={{ padding: "4%" }}>
-                                  <Image
-                                    src={
-                                      post.is_anonymous
-                                        ? "https://avatars.githubusercontent.com/u/16786985?v=4"
-                                        : `${post.written_by_profile.profile_image}`
-                                    }
-                                    style={styles.smallerProfilePic}
-                                  />
-                                </View>
-                                <View
-                                  style={[
-                                    styles.textContainer,
-                                    { width: "120% !important" },
-                                  ]}
-                                >
-                                  <Text style={styles.content}>
-                                    {post.content}
-                                  </Text>
+            {person.smallerPosts &&
+              person.smallerPosts.map((posts, index) => {
+                return (
+                  <Page size="A4" style={styles.page}>
+                    <View key={index} style={styles.section}>
+                      {/* <Image src={background} style={styles.backgroundImg} /> */}
+                      <View style={styles.containerr}>
+                        {posts.map((postSet) => {
+                          return (
+                            <View style={styles.smallerPostsContaner}>
+                              {postSet.map((post) => {
+                                return (
                                   <View
-                                    style={{
-                                      width: "100%",
-                                      position: "relative",
-                                    }}
+                                    key={post.id}
+                                    style={styles.smallerPostContainer}
                                   >
-                                    <Text
+                                    <View style={{ padding: "4%" }}>
+                                      <Image
+                                        src={
+                                          post.is_anonymous
+                                            ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                            : `${post.written_by_profile.profile_image}`
+                                        }
+                                        style={styles.smallerProfilePic}
+                                      />
+                                    </View>
+                                    <View
                                       style={[
-                                        { color: "white" },
-                                        styles.smallProfileText,
+                                        styles.textContainer,
+                                        { width: "120% !important" },
                                       ]}
                                     >
-                                      {" "}
-                                      {`- ${post.is_anonymous
-                                          ? post.written_by
-                                          : post.written_by_profile.name
-                                        }`}
-                                      {!post.is_anonymous &&
-                                        post.written_by_profile.is_ib && (
-                                          <Image
-                                            src={verified}
-                                            style={styles.verified}
-                                          />
-                                        )}
-                                    </Text>
+                                      <Text style={styles.content}>
+                                        {post.content}
+                                      </Text>
+                                      <View
+                                        style={{
+                                          width: "100%",
+                                          position: "relative",
+                                        }}
+                                      >
+                                        <Text
+                                          style={[
+                                            { color: "white" },
+                                            styles.smallProfileText,
+                                          ]}
+                                        >
+                                          {" "}
+                                          {`- ${
+                                            post.is_anonymous
+                                              ? post.written_by
+                                              : post.written_by_profile.name
+                                          }`}
+                                          {!post.is_anonymous &&
+                                            post.written_by_profile.is_ib && (
+                                              <Image
+                                                src={verified}
+                                                style={styles.verified}
+                                              />
+                                            )}
+                                        </Text>
+                                      </View>
+                                    </View>
                                   </View>
-                                </View>
-                              </View>
-                            );
-                          })}
-                        </View>
-                      );
-                    })}
-                  </View>
-                </View>
-              </Page>
-            );
-          })}
+                                );
+                              })}
+                            </View>
+                          );
+                        })}
+                      </View>
+                    </View>
+                  </Page>
+                );
+            })}
 
-{person.smallPosts && person.smallPosts.length !== 0 && person.smallPosts.map((posts, index) => {
-            let color = ["white"];
+            {person.smallPosts &&
+              person.smallPosts.length !== 0 &&
+              person.smallPosts.map((posts, index) => {
+                let color = ["white"];
 
                 function randomColor() {
                   return color[Math.floor(Math.random() * color.length)];
@@ -2684,11 +2837,12 @@ const PDFGenerator = ({ id, idList }) => {
                     </View>
                   </Page>
                 );
-              })}
+            })}
 
-       
-{person.semiMediumPosts && person.semiMediumPosts.length !== 0 && person.semiMediumPosts.map((posts, index) => {
-            let color = ["#9A2617", "#865dff", "#C2571A"];
+            {person.semiMediumPosts &&
+              person.semiMediumPosts.length !== 0 &&
+              person.semiMediumPosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
 
                 function randomColor() {
                   return color[Math.floor(Math.random() * color.length)];
@@ -2905,10 +3059,234 @@ const PDFGenerator = ({ id, idList }) => {
                     </View>
                   </Page>
                 );
-              })}
+            })}
 
-{person.mediumPosts && person.mediumPosts.length !== 0 && person.mediumPosts.map((posts, index) => {
-            let color = ["#9A2617", "#865dff", "#C2571A"];
+            {person.semiMediummPosts &&
+              person.semiMediummPosts.length !== 0 &&
+              person.semiMediummPosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
+
+                function randomColor() {
+                  return color[Math.floor(Math.random() * color.length)];
+                }
+
+                return (
+                  <Page size="A4" style={styles.page}>
+                    <View key={index} style={styles.section}>
+                      {/* <Image src={background} style={styles.backgroundImg} /> */}
+                      <View style={styles.container}>
+                        {/* <Image src={background} style={styles.backgroundImg} /> */}
+                        <View
+                          style={{
+                            height: "5%",
+                            width: "100%",
+                            margin: "0",
+                            padding: "0",
+                            flexShrink: 0,
+                            flexGrow: 0,
+                            flexBasis: "auto",
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: "100%",
+                              width: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <View style={{ height: "100%", width: "20%" }}>
+                              <Image
+                                src={logooo}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                            <View
+                              style={{
+                                height: "100%",
+                                width: "70%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              {profile && (
+                                <Text
+                                  style={{
+                                    color: "white",
+                                    textAlign: "center",
+                                    fontSize: 20,
+                                    fontWeight: 700,
+                                    color: "#ffffff",
+                                    fontFamily: "bebasneue",
+                                  }}
+                                >
+                                  {person.profile.name
+                                    .split(" ")[0]
+                                    .toUpperCase()}
+                                  'S COLLEGE LIFE, FEATURING:
+                                </Text>
+                              )}
+                            </View>
+                            <View style={{ height: "100%", width: "10%" }}>
+                              <Image
+                                src={side}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={{ height: "95%" }}>
+                          {posts &&
+                            posts.map((post, key) => {
+                              const leftPost = key % 2 === 0;
+                              return (
+                                <View key={post.id}>
+                                  {leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.semiMediumHeight,
+                                        styles.l,
+                                      ]}
+                                    >
+                                      <View styles={styles.imageContainer}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicLeft,
+                                            styles.semiMediumProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                      <View
+                                        style={[
+                                          styles.textContainer,
+                                          styles.semiMediumWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileText,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}{" "}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}{" "}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  )}
+
+                                  {!leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.semiMediumHeight,
+                                        styles.r,
+                                      ]}
+                                    >
+                                      <View
+                                        style={[
+                                          styles.textContainerRight,
+                                          styles.semiMediumWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileTextr,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}{" "}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                      <View styles={styles.imageContainerRight}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicRight,
+                                            styles.semiMediumProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                    </View>
+                                  )}
+                                </View>
+                              );
+                            })}
+                        </View>
+                      </View>
+                    </View>
+                  </Page>
+                );
+            })}
+
+            {person.mediumPosts &&
+              person.mediumPosts.length !== 0 &&
+              person.mediumPosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
 
                 function randomColor() {
                   return color[Math.floor(Math.random() * color.length)];
@@ -3125,10 +3503,12 @@ const PDFGenerator = ({ id, idList }) => {
                     </View>
                   </Page>
                 );
-              })}
+            })}
 
-{person.largePosts && person.largePosts.length !== 0 && person.largePosts.map((posts, index) => {
-            let color = ["#9A2617", "#865dff", "#C2571A"];
+            {person.largePosts &&
+              person.largePosts.length !== 0 &&
+              person.largePosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
 
                 function randomColor() {
                   return color[Math.floor(Math.random() * color.length)];
@@ -3344,10 +3724,12 @@ const PDFGenerator = ({ id, idList }) => {
                     </View>
                   </Page>
                 );
-              })}
+            })}
 
-{person.largerPosts && person.largerPosts.length !== 0 && person.largerPosts.map((posts, index) => {
-            let color = ["#9A2617", "#865dff", "#C2571A"];
+            {person.largeePosts &&
+              person.largeePosts.length !== 0 &&
+              person.largeePosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
 
                 function randomColor() {
                   return color[Math.floor(Math.random() * color.length)];
@@ -3409,7 +3791,10 @@ const PDFGenerator = ({ id, idList }) => {
                                     fontFamily: "bebasneue",
                                   }}
                                 >
-                                  {person.profile.name.split(" ")[0].toUpperCase()}'S COLLEGE LIFE, FEATURING:
+                                  {person.profile.name
+                                    .split(" ")[0]
+                                    .toUpperCase()}
+                                  'S COLLEGE LIFE, FEATURING:
                                 </Text>
                               )}
                             </View>
@@ -3560,17 +3945,684 @@ const PDFGenerator = ({ id, idList }) => {
                     </View>
                   </Page>
                 );
-              })}
+            })}
+
+            {person.largeeePosts &&
+              person.largeeePosts.length !== 0 &&
+              person.largeeePosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
+
+                function randomColor() {
+                  return color[Math.floor(Math.random() * color.length)];
+                }
+
+                return (
+                  <Page size="A4" style={styles.page}>
+                    <View key={index} style={styles.section}>
+                      <View style={styles.container}>
+                        {/* <Image src={background} style={styles.backgroundImg} /> */}
+                        <View
+                          style={{
+                            height: "5%",
+                            width: "100%",
+                            margin: "0",
+                            padding: "0",
+                            flexShrink: 0,
+                            flexGrow: 0,
+                            flexBasis: "auto",
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: "100%",
+                              width: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <View style={{ height: "100%", width: "20%" }}>
+                              <Image
+                                src={logooo}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                            <View
+                              style={{
+                                height: "100%",
+                                width: "70%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              {profile && (
+                                <Text
+                                  style={{
+                                    color: "white",
+                                    textAlign: "center",
+                                    fontSize: 20,
+                                    fontWeight: 700,
+                                    color: "#ffffff",
+                                    fontFamily: "bebasneue",
+                                  }}
+                                >
+                                  {person.profile.name
+                                    .split(" ")[0]
+                                    .toUpperCase()}
+                                  'S COLLEGE LIFE, FEATURING:
+                                </Text>
+                              )}
+                            </View>
+                            <View style={{ height: "100%", width: "10%" }}>
+                              <Image
+                                src={side}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={{ height: "95%" }}>
+                          {posts &&
+                            posts.map((post, key) => {
+                              const leftPost = key % 2 === 0;
+                              return (
+                                <View key={post.id}>
+                                  {leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.largerHeight,
+                                        styles.l,
+                                      ]}
+                                    >
+                                      <View styles={styles.imageContainer}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicLeft,
+                                            styles.largerProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                      <View
+                                        style={[
+                                          styles.textContainer,
+                                          styles.largerWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileText,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  )}
+
+                                  {!leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.largerHeight,
+                                        styles.r,
+                                      ]}
+                                    >
+                                      <View
+                                        style={[
+                                          styles.textContainerRight,
+                                          styles.largerWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileTextr,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                      <View styles={styles.imageContainerRight}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicRight,
+                                            styles.largerProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                    </View>
+                                  )}
+                                </View>
+                              );
+                            })}
+                        </View>
+                      </View>
+                    </View>
+                  </Page>
+                );
+            })}
+            
+            {person.largerPosts &&
+              person.largerPosts.length !== 0 &&
+              person.largerPosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
+
+                function randomColor() {
+                  return color[Math.floor(Math.random() * color.length)];
+                }
+
+                return (
+                  <Page size="A4" style={styles.page}>
+                    <View key={index} style={styles.section}>
+                      <View style={styles.container}>
+                        {/* <Image src={background} style={styles.backgroundImg} /> */}
+                        <View
+                          style={{
+                            height: "5%",
+                            width: "100%",
+                            margin: "0",
+                            padding: "0",
+                            flexShrink: 0,
+                            flexGrow: 0,
+                            flexBasis: "auto",
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: "100%",
+                              width: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <View style={{ height: "100%", width: "20%" }}>
+                              <Image
+                                src={logooo}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                            <View
+                              style={{
+                                height: "100%",
+                                width: "70%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              {profile && (
+                                <Text
+                                  style={{
+                                    color: "white",
+                                    textAlign: "center",
+                                    fontSize: 20,
+                                    fontWeight: 700,
+                                    color: "#ffffff",
+                                    fontFamily: "bebasneue",
+                                  }}
+                                >
+                                  {person.profile.name
+                                    .split(" ")[0]
+                                    .toUpperCase()}
+                                  'S COLLEGE LIFE, FEATURING:
+                                </Text>
+                              )}
+                            </View>
+                            <View style={{ height: "100%", width: "10%" }}>
+                              <Image
+                                src={side}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={{ height: "95%" }}>
+                          {posts &&
+                            posts.map((post, key) => {
+                              const leftPost = key % 2 === 0;
+                              return (
+                                <View key={post.id}>
+                                  {leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.largerHeight,
+                                        styles.l,
+                                      ]}
+                                    >
+                                      <View styles={styles.imageContainer}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicLeft,
+                                            styles.largerProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                      <View
+                                        style={[
+                                          styles.textContainer,
+                                          styles.largerWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileText,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  )}
+
+                                  {!leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.largerHeight,
+                                        styles.r,
+                                      ]}
+                                    >
+                                      <View
+                                        style={[
+                                          styles.textContainerRight,
+                                          styles.largerWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileTextr,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                      <View styles={styles.imageContainerRight}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicRight,
+                                            styles.largerProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                    </View>
+                                  )}
+                                </View>
+                              );
+                            })}
+                        </View>
+                      </View>
+                    </View>
+                  </Page>
+                );
+            })}
+
+            {person.largerrPosts &&
+              person.largerrPosts.length !== 0 &&
+              person.largerrPosts.map((posts, index) => {
+                let color = ["#9A2617", "#865dff", "#C2571A"];
+
+                function randomColor() {
+                  return color[Math.floor(Math.random() * color.length)];
+                }
+
+                return (
+                  <Page size="A4" style={styles.page}>
+                    <View key={index} style={styles.section}>
+                      <View style={styles.container}>
+                        {/* <Image src={background} style={styles.backgroundImg} /> */}
+                        <View
+                          style={{
+                            height: "5%",
+                            width: "100%",
+                            margin: "0",
+                            padding: "0",
+                            flexShrink: 0,
+                            flexGrow: 0,
+                            flexBasis: "auto",
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: "100%",
+                              width: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <View style={{ height: "100%", width: "20%" }}>
+                              <Image
+                                src={logooo}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                            <View
+                              style={{
+                                height: "100%",
+                                width: "70%",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              {profile && (
+                                <Text
+                                  style={{
+                                    color: "white",
+                                    textAlign: "center",
+                                    fontSize: 20,
+                                    fontWeight: 700,
+                                    color: "#ffffff",
+                                    fontFamily: "bebasneue",
+                                  }}
+                                >
+                                  {person.profile.name
+                                    .split(" ")[0]
+                                    .toUpperCase()}
+                                  'S COLLEGE LIFE, FEATURING:
+                                </Text>
+                              )}
+                            </View>
+                            <View style={{ height: "100%", width: "10%" }}>
+                              <Image
+                                src={side}
+                                style={{
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                  objectFit: "contain",
+                                }}
+                              ></Image>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={{ height: "95%" }}>
+                          {posts &&
+                            posts.map((post, key) => {
+                              const leftPost = key % 2 === 0;
+                              return (
+                                <View key={post.id}>
+                                  {leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.largerHeight,
+                                        styles.l,
+                                      ]}
+                                    >
+                                      <View styles={styles.imageContainer}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicLeft,
+                                            styles.largerProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                      <View
+                                        style={[
+                                          styles.textContainer,
+                                          styles.largerWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileText,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  )}
+
+                                  {!leftPost && (
+                                    <View
+                                      style={[
+                                        styles.postContainer,
+                                        styles.largerHeight,
+                                        styles.r,
+                                      ]}
+                                    >
+                                      <View
+                                        style={[
+                                          styles.textContainerRight,
+                                          styles.largerWidth,
+                                        ]}
+                                      >
+                                        <Text style={styles.content}>
+                                          {post.content}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            width: "100%",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <Text
+                                            style={[
+                                              { color: "white" },
+                                              styles.smallProfileTextr,
+                                            ]}
+                                          >
+                                            {" "}
+                                            {`- ${
+                                              post.is_anonymous
+                                                ? post.written_by
+                                                : post.written_by_profile.name
+                                            }`}
+                                            {!post.is_anonymous &&
+                                              post.written_by_profile.is_ib && (
+                                                <Image
+                                                  src={verified}
+                                                  style={styles.verified}
+                                                />
+                                              )}
+                                          </Text>
+                                        </View>
+                                      </View>
+                                      <View styles={styles.imageContainerRight}>
+                                        <Image
+                                          src={
+                                            post.is_anonymous
+                                              ? "https://avatars.githubusercontent.com/u/16786985?v=4"
+                                              : `https://yearbook.sarc-iitb.org${post.written_by_profile.profile_image}`
+                                          }
+                                          style={[
+                                            styles.profilePicRight,
+                                            styles.largerProfilePic,
+                                          ]}
+                                        />
+                                      </View>
+                                    </View>
+                                  )}
+                                </View>
+                              );
+                            })}
+                        </View>
+                      </View>
+                    </View>
+                  </Page>
+                );
+            })}
           </>
         ))}
 
       {true && (
         <>
-          
-
           <Page size="A4" style={stylesSigningOff.page}>
             <View style={stylesSigningOff.section}>
               <Image src={back5} style={stylesSigningOff.backgroundImg} />
+            </View>
+          </Page>
+
+          <Page size="A4" style={stylesSigningOff.page}>
+            <View style={stylesSigningOff.section}>
+              <Image src={back6} style={stylesSigningOff.backgroundImg} />
             </View>
           </Page>
           {/* {profile && (
